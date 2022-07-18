@@ -1025,6 +1025,7 @@ name = "server-here"
 version = "0.1.0"
 dependencies = [
  "rocket",
+ "serde",
 ]
 
 [[package]]
