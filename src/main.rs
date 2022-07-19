@@ -2,42 +2,11 @@
 extern crate rocket;
 
 use std::{
-    env::args,
-    io::{Read, stdin, stdout, Write},
+    env::current_dir,
+    io::{stdin, stdout, Write},
     net::{IpAddr, Ipv4Addr},
-    path::{Path, PathBuf},
 };
-use std::env::current_dir;
-use rocket::{Build, Config, Rocket, fs::FileServer};
-
-// fn main() {
-//     let arg = args();
-//
-//     let mut root = String::new();
-//     stdin().read_line(&mut root);
-//     if root.ends_with("\r\n") {
-//         root = String::from(&root[..root.len() - 2]);
-//     } else if root.ends_with("\n") {
-//         root = String::from(&root[..root.len() - 1]);
-//     }
-//
-//     let path = Path::new(&root);
-//     if !path.exists() {
-//         panic!("目标文件夹不存在");
-//     } else if !path.is_dir() {
-//         panic!("根路径需要为文件夹而不是文件");
-//     } else {
-//         let mut entry = PathBuf::from(root);
-//         entry.push("index.html");
-//         if !entry.exists() {
-//             panic!("目标文件夹下无入口文件(index.html)");
-//         } else {
-//             let args = args();
-//             let here = current_dir().unwrap();
-//             println!("ok: {:?}, here: {:?}", args, here);
-//         }
-//     }
-// }
+use rocket::{Config, fs::FileServer};
 
 #[rocket::main]
 async fn main() -> Result<(), rocket::Error> {

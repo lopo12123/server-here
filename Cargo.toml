@@ -1,7 +1,13 @@
 [package]
-name = "server-here"
-version = "0.1.0"
+name = "cargo-server-here"
 edition = "2021"
+version = "0.1.0"
+authors = ["lopo <lopo@zju.edu.cn>"]
+description = "setup a static server for local frontend files"
+keywords = ["server", "locally", "static"]
+license = "MIT"
+repository = "https://github.com/lopo12123/server-here.git"
+readme = "README.md"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
