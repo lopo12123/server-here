@@ -52,18 +52,10 @@ impl IOController {
     }
 }
 
-// 解析参数传入
-pub enum ResolverResult {
-    Port(u16),
-    Root(PathBuf),
-    Both((u16, PathBuf)),
-    Fail(String),
-}
-
 pub struct ArgsResolver {}
 
 impl ArgsResolver {
-    pub fn try_port_and_root() -> ResolverResult {
+    pub fn try_port_and_root() -> (Option<u16>, Option<PathBuf>) {
         let mut arg_map = HashMap::new();
         let mut args = std::env::args().collect::<Vec<String>>();
 
@@ -76,28 +68,32 @@ impl ArgsResolver {
             p += 2;
         }
 
-        let port: u16 = match arg_map.get("-port") {
+        let port: Option<u16> = match arg_map.get("-port") {
             Some(p) => match p.parse::<u16>() {
-                Ok(p_num) => p_num,
-                Err(_) => 8000
+                Ok(p_num) => Some(p_num),
+                Err(_) => None
             },
-            None => 8000
+            None => None
         };
 
         return match arg_map.get("-root") {
             Some(v) => {
+                if v == "" { return (port, None); }
+
                 let mut root = current_dir().unwrap();
                 root.push(v);
 
                 if !root.exists() {
-                    panic!("ROOT not exist!");
+                    println!("ROOT not exist!");
+                    (port, None)
                 } else if !root.is_dir() {
-                    panic!("ROOT is not a directory!");
+                    println!("ROOT is not a directory!");
+                    (port, None)
                 } else {
-                    ResolverResult::Both((port, root))
+                    (port, Some(root))
                 }
             }
-            None => ResolverResult::Port(port),
+            None => { (None, None) }
         };
     }
 }
